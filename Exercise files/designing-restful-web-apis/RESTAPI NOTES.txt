@@ -1,0 +1,273 @@
+					**DESIGNING RESTFUL WEB API**
+				==============================================
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**HTTP:
+	1) When a client going to any web page, it's going to make a request to some remote server.This request is actually a text document.
+	2) The request document contains three pieces:
+		a) Verb : For what action to take.
+		b) Headers : Which is information about the request. 
+		c) Content : Optionally asked for.
+	3) If you make request, you get a response.  
+	4) Responce is the  piece of data like textual document that contains 
+		a) status code : Status code says , did it succeed or not and reason of fail.
+		b) Headers : Useful information
+		c) Content : Any content that the server wants to send back as a part of response.
+	5) Server itself is typically stateless. A request is coming in, the server is going to try to fulfill it,
+	   and then it's going to forget about you as soon as it sends the response, and because of stateless server can handle lots of requests.
+	6) Every connection to the server is very short lived.
+	7) REQUEST:
+		a) verb: Action to perform on the server.
+			1) GET : Request Resource
+			2) POST : Create Resource
+			3) PUT : Update Resource
+			4) PATCH : Update Partial Resource
+			5) DELETE : Delete Resource
+		b) headers: Metadata about the request.
+			1) Content Type : The format of Content
+			2) Content Length : Size of Content
+			3) Authorization : Who's making the call
+			4) Accept : What type can accept
+			5) Cookies : Passenger data in the request
+		c) content:  Content Concerning request
+			1) HTML,CSS,JavaScript,XML,JSON
+			2) Content is not valid with some verbs
+			3) Information to help fulfill request
+			4) Binary and blobs common
+	8)RESPONSE: 
+		a) Status Code: Operation Status
+			1) 100-199 : Informational
+			2) 200-299 : Success
+			3) 300-399 : Redirection
+			4) 400-499 : Client Errors
+			5) 500-599 : Server Errors
+		b) headers: Metadata about the response
+			1) Content Type : The format of Content
+			2) Content Length : Size of Content
+			3) Expires : When to consider stale
+			4) Cookies : Passenger data in the request
+		c) Content: 
+			1) HTML,CSS,JavaScript,XML,JSON
+			2) Binary and blobs common
+			3) APIs often have their own types
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**What is REST?
+	1) RE- Representational 
+	   S- State
+	   T- Transfer
+	   REST- Representational State Transfer
+	2) The idea here is to have trasfer of data or state be representational of the kinds of messages that you want to use.
+	3) This concept include the Seperation of Client and Server, Server Requests are Stateless, cacheable Requests and Uniform Interface
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Design API :
+	1) It is important when you are building an API to design it first instead of just starting to write code and getting on with it.
+	2) The biggest problem is we can't fix an API after publishing.
+	3) Too easy to add ad-hoc endpoints.
+	4) Helps to understand the requirements.
+	5) Well designed API can mature
+	6) We have to design each part of the REST API.
+	7) URIs are just paths to Resources.
+	8) The part of the URI we don't think while designing the API is often the query string.
+	9) Query Strings should always be optional, when we think about them logically.
+       10) Query Strings are often used for things like formatting and sorting and searching. 
+       11) While designing the API Nouns are Good and Verbs are bad, so REST API prefer nouns
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+**What are Resources
+	1) We can think that resources is just a collection of those nouns.
+	2) REST architecture treats every content as a resource. These resources can be Text Files, Html Pages, Images, Videos or Dynamic Business Data.
+	3) REST Server simply provides access to resources and REST client accesses and modifies the resources. 
+	4) Here each resource is identified by URIs/ Global IDs. REST uses various representations to represent a resource where Text, JSON, XML. 
+	5) The most popular representations of resources are XML and JSON.  
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+**Identifiers in URI:
+	1) Being able to access individual item in a resource collection use unique identifiers.
+	2) Does not have to be 'primary keys'.
+	3) In the Uniform Resource Identifier (URI) Identifier which is inside API is important because it identify the unique resource of our database.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+**Verbs:
+	1) REST verbs specify an action to be performed on a specific resource or a collection of resources.
+		a) GET : GET wants to retrieve a resource or collection of resources like sites or individual site.	 
+ 		b) POST : Adding a new resource or creating a new resource. 
+		c) PUT : Updadting an existing data
+		d) PATCH : PATCH is very similar to PUT except it is updating a resource with certain data changes.
+		e) DELETE : Remove the existing resource
+	2) All the verbs are going to depend on who is making the call, after the authentication these verbs works, otherwise anybody can manipulate the resources of our database.
+	3) When VERBS woek with URIs :  
+		If we have resource called Customer and if we issue a GET we should be returning a list of those customers. If we issue a POST, we should be creating a new customer.
+	   	If we issue PUT at endpoint we should expect that PUT should update a bunch of customers at once. If we issue DELETE we should get a error list because we can't find the use case
+	   	for deleting entire collection.
+	4) When VERBS dealing with individual items in collections :
+		In this case of a specific customer, a GET should return just that item. Doing a POST return a error because you can't create a object which is already created.
+		PUT will update an individual item and DELETE should delete that individual item. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Idempotency in Action:
+	1) Idempotent (adj) : Operation that can be applied multiple times without changing the result.
+	2) It simply means that an operation, if executed multiple times, should do the same thing just like GET, PUT, PATCH and DELETE.
+	3) But POST is not idempotent because when we issue a POST it return a brand new object each and every time.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Designing Results:
+	1) When designing the results We should think about members names and that these shouldn't necessarily expose server details.
+	2) While designing the result mostly prefer the camelCase because most of times API come from Java and JavaScript and they prefer camelCase, but if you are 
+	   not familier with such cases and using underscores for seperation of words then atleast be consistent, so developers don't have to learn and spend much time to underastand those conventions.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Decide Formats During Design:
+	1) Abide by Accept Header which atmost present in every HTTP calls
+	2) return sane default	
+	3) Prefer not to use query strings for formats
+	4) Common formats;
+		a) JSON: application/json
+		b) XML; text/xml
+		c) JSONP: application/javascript*
+		d) RSS: application/xml+rss
+		e) ATOM: application/xml+atom
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Hypermedia:
+	1) Hypermedia ia an idea that is part of what REST wants you to do.
+	2) The idea behind the hypermedia is it wants results to be self describing.
+	3) Hypermedia allows programmatic navigation of URI endpoints
+	4) It adds complexity in the way that you are building your APIs and how you are exposing these and having to support them.
+	5) Hypermedia can be helpful.. but pragmatism means that most projects don,t need it.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Designing Associations:
+	1) Associations means sub-objects for existing APIs.
+	2) Associations should return all resources or individual resource.
+	3) Collection can have multiple associations
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Paging:
+	1) Lists should support paging
+	2) Reasons to make paging is to make sure clients don't pull back everything just because they don't know any better, but also allow you to have the interactions with users that make more sense
+	   to them.
+	3) Query strings are commonly used to do this paging. Some also use the URI sections for paging but Query strings are better option because Query strings are always do something different with an existing API.	 
+	4) Use wrappers to imply paging.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Error Handling: 
+	1) In API we can just return status codes but it is often helpful to allow communicate information about the errors.
+	2) We want to use error handling to help our users recover from error that are related to them.
+	3) So often we can return the object with the error information, like we might return a bad request because user made a mistake, but also something about the error to say how to fix it.
+	4) Based on a security concerns we just have to return the failure without an indication.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Caching:
+	1) Caching is one of those ideas that is required to be truly RESTful.
+	2) Not every API need caching but in order to scale up and be really useful, we should design caching into our API.
+	3) Caching refers to storing the server response in the client itself, so that a client need not make a server request for the same resource again and again.
+	4) A great way to handle caching is called entity tags(ETags).
+	5) ETags support strong and weak caching, in which strong means We can go ahead and store it in our rich client or on our phone app and after some time we should be able to send it back with 
+	   changes and this ETag should be able to be constructed by the server.
+	6) Weak caching support is for things that are just very short lived. These ETags are returned in the response and we can see ETag as a header type with some identifier. For weak caching we can start
+	   with W/ and then use that same format in an ETag.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Functional API:
+	1) FUnctional API are not truely RESTful, but in large projects sometimes we have to do some functional.
+	2) Make sure these are documented, completely functional and Not an excuse to build an RPC API.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Async APIs:
+	1) Some APIs Are not RESTful in nature
+	2) Need long-life, polling APIs
+	3) Non-REST Solutions are useful
+	4) Async API Solutions to consider are : Comet, gRPC, SignalR, Firebase, Socket.IO etc.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+** Designing Versioning For API:
+	1) While working on an existing application or creating a new one, we may create multiple APIs that may be consumed by many clients. When the business has started to grow and expand, new requirements arise.
+	   Due to this, we may need to provide more functionality in the existing APIs. However, existing Web API can be consumed by many clients so how to implement the new feature without impacting the existing consumers?
+	   We can solve this problem by versioning our API.
+	2) Web API Versioning is required as the business grows and business requirement changes with the time. As Web API can be consumed by multiple clients at a time, Versioning of Web API will be necessarily required 
+	   so that Business changes in the API will not impact the client that are using/consuming the existing API.
+	3) Choosing the way about designing of versioning for API is the based on the client perspective that client feel it easy while using it, not on the development team perspective that which one is easy for develop.
+	4) There are various types of Designing versioning for API:
+		a) Versioning in the URI Path: In this type it is very clear to clients to see where the version is handled because version is mentioned in URI PATH and due to this after every
+					       versioning we have to change the all clients paths which make it brittle.
+		b) Versioning with Query String: We can simply add a query string that asks for a specific version of our API. So it is optional for includinmg versionin in URL PAth or not.
+	  	   	   	   		 but it is too easy to clients to miss needing the version that everytime we have to remember the which version is needy and not.
+		c) Versioning with Headers: The benifit of this versioning is the it may have sove benifits of Query strings , but it does separate versioning from the rest of your API so tha the 
+   			   		    API writers don't necessarily have to change it, SO it kindly decoupled from the actual API calls. But in this versioning requires more sophisticated developer to manipulate headers
+		d) Versioning with Accept Header: This is benficial beacuse you are not creating your own custom header, but instead you are using the accept header itself to ask for a specific version of your API.
+						  This versioning is less discoverable than the query strings and have more sophisticated developer to use.
+		e) Versioning with Content Type: It is very very complex to implement but if we need it it is very useful. Content type allow you to include custome content type in that you do vnd. and then your application name
+						 as a special type of content. In this case we can use accept header as well as content type with a version embedded in it in order to specify the kind of data we are looking for.
+						 This type is specially used for long lived applications. 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Locking Down API:
+	1) We have to secure our API when we are using private or personalized data.
+	2) We have to secure API while sending sensitive data across the 'wire'.
+	3) Securing API to protect against overuse of our servers.
+	4) And also while using any type of credentials we have to secure our API.
+	5) Securing for only log in and log out of our system but also concern about the transport security.
+	6) To protect the API :
+		a) Server Infrastructure Security : Outside scope of API security
+		b) Secure In-Transit : SSL is almost always appropriate and Cost of SSL is worth the expense.
+		c) Secure the API itself : cross origin Security for Authorization and Authentication.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Cross Origin/Domain Security: 
+	1) Cross domain security is to prevent cross-site scripting from occurring.
+	2) When building an API most platforms don't allow a separate domain to call an API by default, We have to ordinarily go through some hoop to allow another website to call your API.
+	3) Building API for enterprise and it accessible for same domain inside that enterprise don't require cross doamin b ut while making public API we have to allow cross domain.
+	4) In private API we have to consider cross domain for some authorized persons like business partners etc.
+	5) CROSS ORIGIN RESOURCE SHARING (CORS) is the standard platform for doing this.
+	6) CORS allows finely control on who access from a browser to application, also allows to limit what domains can get in, what resources on those domains they have to access and which verbs can be executed on them.
+	7) When cross origin request come to browser, browser send acess request to server in which browser send the host name as well what should you have to do in server, 
+	   after that server replies with the rules and then browser issue with cross a Header.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Authentication and Authorization:
+	1) Authentication : 
+		a) Authentication means Who we are means the information to determine identity while accessing any API
+		b) This may include credentials. like username or password.
+		c) Information that the server can use to identify you and make sure that you are the correct person.
+		d) Authentication Types for API:
+			1) App Authentication : Identifying an app for API, Authenticating as the developer, 
+			2) User Authentication : Identifying as a User 
+	2) Authorization : 
+		a) Authorization means What we can do based on our authentication information,  													
+    		b) Authorization is basically a rules about the rights in which it can control our activity and prevent the access to system.	
+		c) 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+**Authentication Types for APIs:
+	1) App Authentication :	
+		a) When authenticating for an API there are really four common ways to do it.
+			a.1) Coockies :
+				- Coockies are easy and common but not super secure.
+				- Amount of risk is really high .
+				- Using coockies or not it is totally depend on what type of security is needed  
+			a.2) Basic Authentication : 
+				- Easy to implement because it allows you to pass in information in the query string or in headers with the credentials to validate on the server.
+				- not super secure unless enforcing SSL.
+				- Amount of risk is high because it sends credentials on every request which increase the surface area of attacks 
+			a.3) Token Authentication :
+				- It is common and mix of secure and simplicity.
+				- It is more secure than coockies because the usually expire much faster than cookies.
+				- The most common of these token system is the JSON web token which is Industry standard and self contained, small and complete with information require to validate
+				- 
+			a.4) OAuth :
+				- It is used to allow trusted third parties to identify users, so the App which is using the OAuth is never getting the credentials.
+				
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+===================================================================================================================================================================================================================================== 		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

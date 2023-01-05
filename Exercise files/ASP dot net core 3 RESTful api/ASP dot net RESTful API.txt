@@ -1,0 +1,20 @@
+						 **ASP DOT NET RESTFUL API**	 		
+					=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+------------------------------------------------------------------------------------------------------------------------------
+**Using MVC Patterns for Building RESTful APIs:
+	1) Model-view- Controller is an architectural pattern for implementing user interfaces.
+	2) Encourages loose coupling and separation of concerns.
+	3) It is not a full application architecture, typically MVC is used in presentation layer.
+	4) API also have a user interface for a consumer of that API.
+	5) MVC consist three parts:
+		a) Model : Which is handles the logic of application data. A Model in this sense can contain code to 
+			   retrieve or store data at that level. 
+		b) View : View represent a part of the application that handles displaying data. 
+		c) Controller : Controller then handles the interaction between the view and the model including handling 
+				the user input. 
+	6) The user which interacts with the APIs is the API consumer.
+	7) View and the controller both depend on the Model and controller is depend on view also.
+------------------------------------------------------------------------------------------------------------------------------
+	
+
+			        
