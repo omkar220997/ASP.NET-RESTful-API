@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "sKrScYgzVYuERVA9NPWsvqcpqvigTDcGyoBBemmOXFrGBCWvn1RzRkV4EF7DtZYRyqlo1N7c39JEswhjeOEmAw==",
+  "dgSpecHash": "7NwSpBmPxviCyY05PmLZ+msjZmYy7OEfzWPKNHNTs2UDf+bIYp/iF31Dz/k+ZCg/sTL2sUcv9TMnrIVqdB+j9A==",
   "success": true,
   "projectFilePath": "C:\\Users\\kada_omk\\Desktop\\Training\\REST API\\Exercise files\\ASP dot net core 3 RESTful api\\CourseLibrary\\CourseLibrary.API\\CourseLibrary.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\kada_omk\\.nuget\\packages\\automapper\\8.1.1\\automapper.8.1.1.nupkg.sha512",
+    "C:\\Users\\kada_omk\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\6.1.1\\automapper.extensions.microsoft.dependencyinjection.6.1.1.nupkg.sha512",
     "C:\\Users\\kada_omk\\.nuget\\packages\\microsoft.csharp\\4.6.0\\microsoft.csharp.4.6.0.nupkg.sha512",
     "C:\\Users\\kada_omk\\.nuget\\packages\\microsoft.data.sqlclient\\1.0.19249.1\\microsoft.data.sqlclient.1.0.19249.1.nupkg.sha512",
     "C:\\Users\\kada_omk\\.nuget\\packages\\microsoft.entityframeworkcore\\3.0.0\\microsoft.entityframeworkcore.3.0.0.nupkg.sha512",
