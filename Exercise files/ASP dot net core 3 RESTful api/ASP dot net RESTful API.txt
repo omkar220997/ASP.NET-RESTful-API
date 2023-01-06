@@ -100,7 +100,9 @@ Steps:
 	6) For getting the result as a return from a repository we have an instance of repository so we can inject instance through Constructor injection.
 	7) At constructor check for Null by throwing ArgumentNullexception.
 	8) Create a instance in action method and then serialize data to Json and retrun it and for that we can use JsonResult.
-	9) 
+	9) We want to give responce to the GET method so we can use [HttpGet()] attribute to the GetAuthors().
+       10) For getting the single Result add another action in controller with the [HttpGet{}] attribute with the parameter in attribute.
+       11) 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Routing:
 	1) Routing matches a request URI to an action on a controller. The MVC framework parses the URI and tries to map it an action on the controller. So in ASP.NET CORE3 the prefered
@@ -114,7 +116,85 @@ Steps:
 			       This is basically best for the Web applications. 
 		b) Attribute-based Routing: No conventions are applied.that means we have to set them up in another way through attributes.Allow us to use atrributes at the controller and action level.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		 
+**Status codes:
+	1) Level 1 (100) : They are informational and were not the part of the HTTP1 Standard.
+	2) Level 2 (200) : They are mean success.
+		a) 200 : Ok
+		b) 201 : Created 
+		c) 204 : No content means successful rewuest that shouldn't retrun anything.
+	3) Level 3 (300) : This are used for redirection. 
+	4) Level 4 (400) : Client Mistakes 
+		a) 400 : Bad request
+		b) 401 : Unauthorized
+		c) 403 : Forbidden means that the authentication succeeded but the authenticated user doesn't have access to the requested resource.
+		d) 404 : Not found means that requested resource doesn't exist.
+		e) 405 : Method  not allowed
+		f) 406 Not Acceptable
+		g) 409 : Conflict 
+		h) 415 : Unsupported media type
+		i) 422 : Unprocessable entity
+	5) level 5 (500) : Server request.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Error VS Faults : 
+	1) Errors : Consumer passes invalid data to the API, and the API correctly reject this , Level 400 status codes , Do not contribute to API availability
+	2) Faults : API fails to retrun a response to a valid request , Level 500 status codes , Do contribute to API availability.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 		 
 				 
 	
 		
