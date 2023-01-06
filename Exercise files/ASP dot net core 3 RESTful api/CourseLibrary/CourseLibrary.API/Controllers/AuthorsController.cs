@@ -25,10 +25,12 @@ namespace CourseLibrary.API.Controllers
         }
 
         [HttpGet()]
-        public ActionResult<IEnumerable<AuthorDTO>> GetAuthors()
+        [HttpHead]
+        public ActionResult<IEnumerable<AuthorDTO>> GetAuthors( string mainCategory)
         {
-            var authorsFromRepo = _courseLibraryRepository.GetAuthors();
-            var authors = new List<AuthorDTO>();
+            //throw new Exception("Test exception");
+            var authorsFromRepo = _courseLibraryRepository.GetAuthors(mainCategory);
+            //var authors = new List<AuthorDTO>();
 
             //foreach (var author in authorsFromRepo)
             //{

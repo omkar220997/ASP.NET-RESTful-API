@@ -139,12 +139,58 @@ Steps:
 	1) Errors : Consumer passes invalid data to the API, and the API correctly reject this , Level 400 status codes , Do not contribute to API availability
 	2) Faults : API fails to retrun a response to a valid request , Level 500 status codes , Do contribute to API availability.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**
-
-
-
-
-
+**Responce with Problem details:
+	1) Problem details are nothing but just a JSON format which describe the information of problems
+	2) Problemm details defines the common error formats for those applications that need one because sometimes status codes don't convey enough information about the problems.
+	3) In this respose header Content- Type is application/problem+json
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+** Content Negotiation:
+	1) The process of selecting the best representation for a given response when there are multiple representations available
+	2) For the request we have multiple response presentation options are available like JSON,XML,TEXT and etc... but from this we have to choose the appropriate presentation option to display out response.
+	3) When we are building API for a single cliet then it is ok to choose any one representation option but while creating API for multiple clients then it is not possible that all the clients have 
+	   control on only one option at that point Media type is passed via the Accept header of the request.
+	4) Returning a representation in a default format when no Accept header is included is acceptable.
+	5) Returning a representaiton in a default format when the requested media type is not available isn't acceptable and in this case 406-Not acceptable code is warrented.
+	6) So in ASP.NET CORE we can do this with output formatters.
+	7) the consumer of the API can request a specific type of output by setting the accept header to the requested media type. 
+	8) ASP.NET CORE also support the input formatters. An input formatters deal with input. For input the media type of the request body is identified through the content-type header.
+	9) In case of the accept header that tells the API what format to return
+==================================================================================================================================================================================================================================
+**Outer Facing vs Entity Model:
+	1) The entity model represents database rows as objects.
+	2) The outer facing model represents what's send over the wire
+	3) Separating outer and entity models leads to more robust, reliable and evolvable code.
+	4) When changing the databse from the entity class and then using same entity class to show the data then user might get confused because of renamed or changed data that's why separating that from entity class is important.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Handling Errors:
+	1) While handling the errors when we throw exception at a development stage it shows the entire stack flow with the source code to the consumer of API but and that's not a good, but when we switch the development
+	   stage to production stage the stack flow will not appear.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**HTTP HEAD:
+	1) HEAD is identical to GET, with the notable difference that the API shouldn't return a response body.
+	2) It can be used to obtain information on the resource.
+	3) For implementing Head in program just add [HttpHead] attribute.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Passing Data to the API:
+	1) Data can be passed to an API by various means e.g. via credit string parameters or via the request body.
+	2) We can apply binding source attributes tell the model binding engine where to find the binding source.
+	3) There are multiple attributes exist like: 
+		a) [FromBody] : Request body
+		b) [FromForm] : Form data in the request body
+		c) [FromHeader] : Request Header
+		d) [FromQuery] : Query string parameters
+		e) [FromRoute] : Route data from the current request
+		f) [FromService] : The service injected as action parameter
+	4) Use binding source attributes to explicitly state where the action parameter should be bound from
+	5) Rules for using binding source atrribute manually: 
+		a) [FromBody] : Inferred for complex types
+		b) [FromForm] : Inferred for action parameters of type IFormFile and IFormFileCollecion
+		c) [FromHeader] : Inferred for any action parameter name matching a parameter in the route template
+		d) [FromQuery] : Inferred for any other action parameters
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Filtering and Searching : 
+	1) Filtering a collection means limiting the collection taking into account a predicate.
+	2) Searching a collection means adding matching items to the collection based on a predefined set of rules		
 
 
 
