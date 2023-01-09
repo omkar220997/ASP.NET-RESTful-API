@@ -190,9 +190,40 @@ Steps:
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Filtering and Searching : 
 	1) Filtering a collection means limiting the collection taking into account a predicate.
-	2) Searching a collection means adding matching items to the collection based on a predefined set of rules		
+	2) Filtering allows you to be precise by adding filters until you get exactly the results you want.
+	3) Searching a collection means adding matching items to the collection based on a predefined set of rules.
+	4) Searching allows you to go wider- it is used when you don't exactly know which item will be in the collection.
+	5) Filtering nand searching are not part of the resource. Only allow filtering on fields that are part of the resource.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Deferred Execution: 
+	1) Query execution occurs sometime after the query is constructed,
+	2) A query variable stores query commands, not results and the query execution is happen only when the iteration happens not on the query creation.
+	3) Iteration happen in many ways: 	
+		a) foreach loop 
+		b) ToList()
+		c) ToArray()
+		d) ToDictionary()
+		e) Singleton queries
+========================================================================================================================================================================================================================================		
+**Creating Resources:
+	1) There are ywo main important principles while creating resources:
+	  	a) Method Safety
+		b) Method Idempotency
+	2) Method Safety:
+		 a)  A method is considered safe when it doesn't change the resource representation
+	3) Metgod Idempotency:
+		a) A method is considered idempotent when it can be called multiple times with the same result
+	4) 	  Http method		safe? 		Idempotent?
+	          a) GET 		yes		   yes
+	          b) OPTIONS		yes		   yes
+		  c) HEAD 		yes		   yes
+		  d) POST 		no		   no
+		  e) DELETE		no		   yes
+		  f) PUT		no 		   yes
+		  g) PATCH		no		   no
+	5) Method safety and Idempotency help decide which method to use for which use case
 
-
+			
 
 
 
