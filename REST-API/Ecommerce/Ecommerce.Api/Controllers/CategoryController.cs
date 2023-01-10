@@ -1,7 +1,14 @@
-﻿using Ecommerce.Api.Models;
+﻿using Ecommerce.Api.DBContexts;
+using Ecommerce.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Ecommerce.Api.Controllers
 {
@@ -9,34 +16,70 @@ namespace Ecommerce.Api.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        public static List<Category> listOfCategories = new List<Category>
+        // GET: api/<CategoryController>
+        private ApplicationContext _context;
+        public CategoryController(ApplicationContext context)
         {
-            new Category{Id=1, Title="Samsung",DisplayOrder=1},
-            new Category{Id=2, Title="Apple",DisplayOrder=2},
-            new Category{Id=3, Title="Vivo",DisplayOrder=3},
-            new Category{Id=4, Title="Oppo",DisplayOrder=4},
-            new Category{Id=5, Title="Nokia",DisplayOrder=5},
-        };
+            _context = context;
+        }
+
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable <Category> Get()
         {
-            return listOfCategories;
+            return _context.Categories;
         }
+
+        // GET api/<CategoryController>/5
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            if(id == 0)
+            {
+                //throw new ArgumentNullException("id");
+                return NotFound();
+            }
+            else if (id > 6)
+            {
+                return BadRequest();
+            }
+            return Ok(_context.Categories.FirstOrDefault(x=>x.Id==id));
+        }
+
+        // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody]Category category)
+        public IActionResult Post([FromBody] Category category)
         {
-            listOfCategories.Add(category);
+            _context.Categories.Add(category);
+            _context.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
         }
+
+        // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
-        public void Post(int id, [FromBody] Category category)
+        public IActionResult Put(int id, [FromBody] Category category)
         {
-            listOfCategories[id] = category;
+            var categoryfromDb = _context.Categories.FirstOrDefault(x => x.Id == id);
+            if (categoryfromDb == null)
+            {
+                //throw new ArgumentNullException(nameof(categoryfromDb));
+                return BadRequest();
+            }
+
+            categoryfromDb.Title= category.Title;
+            categoryfromDb.DisplayOrder= category.DisplayOrder;
+            _context.Categories.Update(categoryfromDb);
+            _context.SaveChanges();
+            return StatusCode(StatusCodes.Status202Accepted); ;
         }
+
+        // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            listOfCategories.RemoveAt(id);
+            var categoryFromDb = _context.Categories.Find(id);
+            _context.Categories.Remove(categoryFromDb);
+            _context.SaveChanges();
+
         }
-                       
     }
 }

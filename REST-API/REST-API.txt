@@ -1,2 +1,5 @@
 REST API ASP DOT NET:
-	1) 
+	API means Application Programming Interface for example If we want to book a train ticket and we search over the intenet we can see there are lots of website from which we can book our ticket,
+but if we notice all the websites have same data how it is possible? So on internet the data is saved on server and provide the functionality to these websites. So each website have the API-KEY and with the help of that key
+server validate the user. When we want to see the all timing of trains which travel from Pune to Delhi the API generate the request to server and server response with the information.
+	Using REST for creating API is very useful because REST is stateless and it cannot store the information of previous request. So that REST can capable to handle multiple request.  
