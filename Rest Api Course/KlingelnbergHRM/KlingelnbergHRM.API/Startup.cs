@@ -29,8 +29,11 @@ namespace KlingelnbergHRM.API
         {
             services.AddControllers();
             services.AddScoped<IklingelnbergRepository, KlingelnbergRepository>();
-            services.AddDbContext<KlingelnbergContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<KlingelnbergContext>(options =>
+            {
+                options.UseSqlServer(
+                        @"Server=(localdb)\mssqllocaldb;Database=KlingelnbergHRM;Trusted_Connection=True;");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

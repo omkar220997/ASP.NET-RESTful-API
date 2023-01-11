@@ -1,0 +1,8 @@
+While working with the RESTful Web API we use routing by providing the route to the HTTP atrributes at specific action or we can use Route attribute to the entire class, We use routing 
+to map the incoming HTTP resuest to correct action method from controller. We use the mentioned path along with attributes while writing the URI along with the HTTP method.
+While writing the URI we should have to use noun not action because we have action methods for that we cannot use 'api/GetEmployee' like this in our URI simply we just have to write 
+'api/employee' with the GET Action method. 
+If we have large amount of data properties of objects then it is very complex and time consuming procedure to create a relation between every property of that object instead of this we can just use AutoMapper
+it we automatically Map the relation between each property we just have to pass the Source type and destination type. 
+For creating the resource we can use POST method in which we can add in appropriate Content-type. With the help of simple Post method we can add only one data at one time but we can also add multiple data by 
+creating the collection.

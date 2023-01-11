@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,16 +7,17 @@ namespace KlingelnbergHRM.API.Entities
 {
     public class Department
     {
-        [Key]
+        //[Key]
         public int DepartmentId { get; set; }
-        [Required]
+        //[Required]
         public string DepartmentName { get; set; }
-        [MaxLength(250)]
+        //[MaxLength(250)]
         public string DepartmentDescription { get; set; }
-        [ForeignKey("EmployeesId")]
+        //[ForeignKey("EmployeesId")]
         public Employee Employee { get; set; }
 
         public int EmployeesId { get; set; }
+
 
     }
 }

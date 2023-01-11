@@ -5,7 +5,7 @@ using System;
 
 namespace KlingelnbergHRM.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/employees")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {

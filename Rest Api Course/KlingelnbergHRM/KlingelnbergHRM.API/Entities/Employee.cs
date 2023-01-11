@@ -7,12 +7,13 @@ namespace KlingelnbergHRM.API.Entities
 {
     public class Employee
     {
-        [Key]
+        //[Key]
         public int EmployeeId { get; set; }
-        [Required]
+        //[Required]
         public string EmployeeName { get; set; }
-        [MaxLength(100)]
+        //[MaxLength(100)]
         public string EmployeeDescription { get; set; }
-        public ICollection<Department> Departments { get; set; }= new List<Department>();
+        public ICollection<Department> Departments { get; set; } = new List<Department>();
+        public ICollection<Employee> Employees { get; set; }= new List<Employee>();
     }
 }
